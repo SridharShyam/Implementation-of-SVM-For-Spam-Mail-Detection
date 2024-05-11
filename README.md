@@ -21,10 +21,29 @@ Program to implement the SVM For Spam Mail Detection..
 Developed by: SHYAM S
 RegisterNumber: 212223240156
 */
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split as t
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn import svm
+from sklearn.metrics import classification_report,accuracy_score
+df=pd.read_csv("/content/spam.csv",encoding='ISO-8859-1')
+df.head()
+
+vectorizer=CountVectorizer()
+x=vectorizer.fit_transform(df['v2'])
+y=df['v1']
+x_train,x_test,y_train,y_test=t(x,y,test_size=0.25,random_state=42)
+model=svm.SVC(kernel='linear')
+model.fit(x_train,y_train)
+predictions=model.predict(x_test)
+print("accuracy:",accuracy_score(y_test,predictions))
+print("Classification report:")
+print(classification_report(y_test,predictions))
 ```
 
 ## Output:
-![SVM For Spam Mail Detection](sam.png)
+![alt text](<Screenshot 2024-05-11 183657.png>)
 
 
 ## Result:
